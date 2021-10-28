@@ -1,7 +1,7 @@
 const bodyparse = require('body-parser');
 const express = require('express');
 const methodOverride = require('method-override');
-
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 app.use(bodyparse.json({
@@ -15,15 +15,17 @@ app.use(bodyparse.urlencoded({
    extended:true
 }));
 app.use(methodOverride('X-HTTP-Method-Override'));
+app.get('/', (req, res) => res.send('API Running'));
+
 
 require('./routes')(app);
 
-let server = require('http').createServer(app);
+/*let server = require('http').createServer(app);*/
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
-
-server.listen(3000,function () {
+/*server.listen(3000,function () {
    console.log('Server app running on port 3000');
-});
+});*/
 
 /*const http=require("http");
 const hostname='127.0.0.1';
